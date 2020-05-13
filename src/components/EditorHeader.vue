@@ -44,11 +44,16 @@ export default {
     };
   },
   methods: {
-    ...mapMutations("editor", ["addLayer"]),
+    ...mapMutations("editor", ["addLayer", "setCurLayer"]),
+    // 点击面板按钮的事件处理
     handleClickPanel(panel) {
       const { layerConstructor } = panel;
+      // 使用相应的构造器创建新的图层实例
       const layerIns = new layerConstructor();
+      // 把新的图层实例添加进图层列表
       this.addLayer(layerIns);
+      // 把新的图层实例设置为当前选中的图层
+      this.setCurLayer(layerIns);
     }
   }
 };
@@ -57,6 +62,7 @@ export default {
 <style lang="less" scoped>
 .editor-header {
   height: 60px;
+  width: 100vw;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
@@ -72,6 +78,7 @@ export default {
       display: flex;
       flex-direction: column;
       align-items: center;
+      padding: auto;
       margin-right: 10px;
       cursor: pointer;
       &:hover {

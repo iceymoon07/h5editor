@@ -4,14 +4,14 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 /**
- * @description 当前编辑器store
+ * @description 当前编辑器 store
  */
 const editor = {
   namespaced: true,
   state: {
-    // 图层列表
+    // 当前在编辑器中显示的图层列表
     layerList: [],
-    // 当前图层
+    // 当前选中的图层
     curLayer: null,
   },
   mutations: {
@@ -27,30 +27,37 @@ const editor = {
     setLayerList(state, layerList) {
       state.layerList = layerList;
     },
+    /**
+     * @description 设置当前选中的图层
+     */
+    setCurLayer(state, layerIns) {
+      state.curLayer = layerIns;
+    }
   },
   actions: {},
   getters: {},
 };
 
 /**
- * @description 左侧页面列表store
+ * @description 左侧页面列表 store
  */
 const page = {
   namespaced: true,
   state: {
-    // 页面列表
+    // 页面列表，默认有一页
     pageList: [
-      {
+      { // 页面的图层列表
         layerList: [],
+        // 页面预览图 url
         previewUrl: '',
-      },
+      }
     ],
-    // 当前页面
+    // 当前选中的页面
     curPage: null,
   },
   mutations: {
     /**
-     * @description 设置当前page
+     * @description 设置当前选中的页面
      */
     setCurPage(state, page) {
       state.curPage = page;
