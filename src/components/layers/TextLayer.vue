@@ -6,6 +6,7 @@
       :style="layerStyle"
       contenteditable="true"
       @click.capture="$emit('click-layer')"
+      @mousedown="$emit('drag-layer',$event)"
     >{{layerData.text}}</div>
     <widget :layer-data="layerData" v-if="isSelected"></widget>
   </div>
@@ -42,28 +43,15 @@ export default {
       return this.layerData === this.curLayer;
     }
   },
-  methods: {
-    handleDragLayer(e) {
-      if (e.target !== this.$refs.content) {
-        return;
-      }
-      let x0 = e.clientX;
-      let y0 = e.clientY;
-      const handleMove = ({ clientX, clientY, target }) => {
-        this.layerData.x = this.layerData.x + clientX - x0;
-        this.layerData.y = this.layerData.y + clientY - y0;
-        x0 = clientX;
-        y0 = clientY;
-      };
-      document.addEventListener("mousemove", handleMove);
-      document.addEventListener("mouseup", () => {
-        document.removeEventListener("mousemove", handleMove);
-      });
-    }
-  },
+  methods: {}
+  /*
   mounted() {
     document.addEventListener("mousedown", this.handleDragLayer);
+  },
+  destroyed() {
+    document.removeEventListener("mousedown", this.handleDragLayer);
   }
+  */
 };
 </script>
 
