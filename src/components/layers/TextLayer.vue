@@ -4,7 +4,7 @@
       class="content"
       :style="layerStyle"
       contenteditable="true"
-      @click="$emit('click-layer')"
+      @click.capture="$emit('click-layer')"
     >{{layerData.text}}</div>
     <widget :layer-data="layerData" v-if="isSelected"></widget>
   </div>
