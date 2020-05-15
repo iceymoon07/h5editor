@@ -11,14 +11,6 @@
         <i :class="item.iconClass"></i>
         <span>{{item.name}}</span>
       </span>
-      <!-- <span class="panel-option">
-        <i class="iconfont icon-tupian"></i>
-        <span>图片</span>
-      </span>-->
-      <!-- <span class="panel-option">
-        <i class="iconfont icon-xingzhuang-juxing"></i>
-        <span>形状</span>
-      </span>-->
     </span>
     <span class="operation">操作</span>
   </header>
@@ -26,6 +18,7 @@
 
 <script>
 import TextLayer from "../layer/TextLayer";
+import ImageLayer from "../layer/ImageLayer";
 import { mapMutations } from "vuex";
 
 const LAYER_PANEL_LIST = [
@@ -33,6 +26,11 @@ const LAYER_PANEL_LIST = [
     name: "文本",
     iconClass: "iconfont icon-wenben",
     layerConstructor: TextLayer
+  },
+  {
+    name: "图片",
+    iconClass: "iconfont icon-tupian",
+    layerConstructor: ImageLayer
   }
 ];
 

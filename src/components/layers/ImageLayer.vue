@@ -1,12 +1,12 @@
 <template>
-  <div class="text-layer">
-    <div
+  <div class="image-layer">
+    <img
       class="content"
+      :src="layerData.url"
       :style="layerStyle"
-      contenteditable="false"
       @click.capture="$emit('click-layer')"
-      @mousedown="$emit('drag-layer',$event)"
-    >{{layerData.text}}</div>
+      @mousedown.prevent="$emit('drag-layer',$event)"
+    />
     <widget
       :layer-data="layerData"
       v-if="isSelected"
@@ -35,10 +35,8 @@ export default {
     ...mapState("editor", ["curLayer"]),
     // 文本图层的样式
     layerStyle() {
-      const { color, fontSize, x, y, w, h } = this.layerData;
+      const { x, y, w, h } = this.layerData;
       return {
-        color: color,
-        fontSize: fontSize + "px",
         transform: `translate(${x}px,${y}px)`,
         width: w + "px",
         height: h + "px"
@@ -54,7 +52,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.text-layer {
+.image-layer {
   position: absolute;
   .content {
     position: absolute;

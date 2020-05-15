@@ -13,6 +13,17 @@
           @drag-bl="handleDragBL(layer,$event)"
           @drag-br="handleDragBR(layer,$event)"
         ></text-layer>
+        <image-layer
+          v-if="layer.type === 'IMAGE'"
+          :layer-data="layer"
+          :key="index"
+          @click-layer="handleClickLayer(layer)"
+          @drag-layer="handleDragLayer(layer,$event)"
+          @drag-tl="handleDragTL(layer,$event)"
+          @drag-tr="handleDragTR(layer,$event)"
+          @drag-bl="handleDragBL(layer,$event)"
+          @drag-br="handleDragBR(layer,$event)"
+        ></image-layer>
       </template>
     </template>
   </div>
@@ -21,6 +32,7 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import TextLayer from "./layers/TextLayer.vue";
+import ImageLayer from "./layers/ImageLayer.vue";
 import {
   handleDragLayer,
   handleDragTL,
@@ -31,7 +43,7 @@ import {
 
 export default {
   name: "PageView",
-  components: { TextLayer },
+  components: { TextLayer, ImageLayer },
   data() {
     return {};
   },
