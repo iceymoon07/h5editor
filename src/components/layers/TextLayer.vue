@@ -8,7 +8,14 @@
       @click.capture="$emit('click-layer')"
       @mousedown="$emit('drag-layer',$event)"
     >{{layerData.text}}</div>
-    <widget :layer-data="layerData" v-if="isSelected"></widget>
+    <widget
+      :layer-data="layerData"
+      v-if="isSelected"
+      @drag-tl="$emit('drag-tl',$event)"
+      @drag-tr="$emit('drag-tr',$event)"
+      @drag-bl="$emit('drag-bl',$event)"
+      @drag-br="$emit('drag-br',$event)"
+    ></widget>
   </div>
 </template>
 
@@ -44,14 +51,6 @@ export default {
     }
   },
   methods: {}
-  /*
-  mounted() {
-    document.addEventListener("mousedown", this.handleDragLayer);
-  },
-  destroyed() {
-    document.removeEventListener("mousedown", this.handleDragLayer);
-  }
-  */
 };
 </script>
 

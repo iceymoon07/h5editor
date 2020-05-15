@@ -8,6 +8,10 @@
           :key="index"
           @click-layer="handleClickLayer(layer)"
           @drag-layer="handleDragLayer(layer,$event)"
+          @drag-tl="handleDragTL(layer,$event)"
+          @drag-tr="handleDragTR(layer,$event)"
+          @drag-bl="handleDragBL(layer,$event)"
+          @drag-br="handleDragBR(layer,$event)"
         ></text-layer>
       </template>
     </template>
@@ -17,6 +21,13 @@
 <script>
 import { mapState, mapMutations } from "vuex";
 import TextLayer from "./layers/TextLayer.vue";
+import {
+  handleDragLayer,
+  handleDragTL,
+  handleDragTR,
+  handleDragBL,
+  handleDragBR
+} from "../utils/dragHandlers";
 
 export default {
   name: "PageView",
@@ -33,29 +44,16 @@ export default {
     handleClickLayer(layer) {
       this.setCurLayer(layer);
     },
-    handleDragLayer(layer, e) {
-      /*if (e.target !== this.$refs.content) {
-        return;
-      }*/
-      // 记录刚开始点击图层时的初始鼠标位置
-      let x0 = e.clientX;
-      let y0 = e.clientY;
-      // 鼠标移动事件处理
-      const handleMove = ({ clientX, clientY, target }) => {
-        // 用移动后的鼠标位置相对于初始鼠标位置的变化量，更新图层的 x、y 位置数据
-        layer.x = layer.x + clientX - x0;
-        layer.y = layer.y + clientY - y0;
-        // 更新初始鼠标位置
-        x0 = clientX;
-        y0 = clientY;
-      };
-      // 鼠标点击图层时添加鼠标移动事件绑定
-      document.addEventListener("mousemove", handleMove);
-      // 鼠标松开时移除鼠标移动事件绑定
-      document.addEventListener("mouseup", () => {
-        document.removeEventListener("mousemove", handleMove);
-      });
-    }
+    // 拖拽图层事件处理
+    handleDragLayer,
+    // 拖拽控件左上角方块事件处理
+    handleDragTL,
+    // 拖拽控件右上角方块事件处理
+    handleDragTR,
+    // 拖拽控件左下角方块事件处理
+    handleDragBL,
+    // 拖拽控件右下角方块事件处理
+    handleDragBR
   }
 };
 </script>

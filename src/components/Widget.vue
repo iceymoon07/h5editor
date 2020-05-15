@@ -1,9 +1,9 @@
 <template>
   <div class="widget" :style="widgetStyle">
-    <div class="corner tl" :style="cornerStyle.tl"></div>
-    <div class="corner tr" :style="cornerStyle.tr"></div>
-    <div class="corner bl" :style="cornerStyle.bl"></div>
-    <div class="corner br" :style="cornerStyle.br"></div>
+    <div class="corner tl" :style="cornerStyle.tl" @mousedown="$emit('drag-tl',$event)"></div>
+    <div class="corner tr" :style="cornerStyle.tr" @mousedown="$emit('drag-tr',$event)"></div>
+    <div class="corner bl" :style="cornerStyle.bl" @mousedown="$emit('drag-bl',$event)"></div>
+    <div class="corner br" :style="cornerStyle.br" @mousedown="$emit('drag-br',$event)"></div>
   </div>
 </template>
 
