@@ -2,26 +2,19 @@
   <div class="edit-box" v-if="curLayer">
     <div class="position-editor">
       <span>x坐标</span>
-      <el-input-number v-model="curLayer.x" controls-position="right" size="mini" label="x坐标"></el-input-number>
+      <el-input-number v-model="curLayer.x" controls-position="right" size="mini"></el-input-number>
       <span>y坐标</span>
-      <el-input-number v-model="curLayer.y" controls-position="right" size="mini" label="y坐标"></el-input-number>
+      <el-input-number v-model="curLayer.y" controls-position="right" size="mini"></el-input-number>
     </div>
     <div class="size-editor">
       <span>宽</span>
-      <el-input-number v-model="curLayer.w" controls-position="right" size="mini" label="y坐标"></el-input-number>
+      <el-input-number v-model="curLayer.w" controls-position="right" size="mini"></el-input-number>
       <span>高</span>
-      <el-input-number v-model="curLayer.h" controls-position="right" size="mini" label="y坐标"></el-input-number>
+      <el-input-number v-model="curLayer.h" controls-position="right" size="mini"></el-input-number>
     </div>
     <div class="fontsize-editor" v-if="curLayer.type === 'TEXT'">
       <span>字号</span>
-      <el-input-number
-        v-model="fontSize"
-        controls-position="right"
-        size="mini"
-        :min="0"
-        :max="20"
-        label="y坐标"
-      ></el-input-number>
+      <el-input-number v-model="curLayer.fontSize" controls-position="right" size="mini"></el-input-number>
     </div>
     <div class="color-editor" v-if="curLayer.type === 'TEXT'">
       <span>颜色</span>

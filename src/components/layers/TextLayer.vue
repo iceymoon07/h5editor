@@ -1,12 +1,18 @@
 <template>
-  <div class="text-layer">
-    <div
+  <div
+    class="text-layer"
+    :style="layerStyle"
+    @dblclick="inputDisabled=false"
+    @mousedown="handleMousedown"
+  >
+    <input
       class="content"
-      :style="layerStyle"
-      contenteditable="false"
-      @click.capture="$emit('click-layer')"
-      @mousedown="$emit('drag-layer',$event)"
-    >{{layerData.text}}</div>
+      :style="contentStyle"
+      type="text"
+      v-model="layerData.text"
+      :disabled="inputDisabled"
+      @blur="inputDisabled=true"
+    />
     <widget
       :layer-data="layerData"
       v-if="isSelected"
@@ -29,19 +35,28 @@ export default {
     layerData: Object
   },
   data() {
-    return {};
+    return { inputDisabled: true };
   },
   computed: {
     ...mapState("editor", ["curLayer"]),
     // 文本图层的样式
     layerStyle() {
-      const { color, fontSize, x, y, w, h } = this.layerData;
+      const { x, y, w, h } = this.layerData;
       return {
-        color: color,
-        fontSize: fontSize + "px",
         transform: `translate(${x}px,${y}px)`,
         width: w + "px",
-        height: h + "px"
+        height: h + "px",
+        border: this.isSelected ? "1px dashed" : "none"
+      };
+    },
+    contentStyle() {
+      const { color, fontSize, w, h } = this.layerData;
+      return {
+        width: w + "px",
+        height: h + "px",
+        color: color,
+        fontSize: fontSize + "px",
+        cursor: this.isSelected && this.inputDisabled ? "move" : "auto"
       };
     },
     // 判断图层是不是当前选中的图层，是的话就显示边框控件 Widget
@@ -49,7 +64,12 @@ export default {
       return this.layerData === this.curLayer;
     }
   },
-  methods: {}
+  methods: {
+    handleMousedown(e) {
+      this.$emit("click-layer");
+      this.$emit("drag-layer", e);
+    }
+  }
 };
 </script>
 
@@ -58,7 +78,13 @@ export default {
   position: absolute;
   .content {
     position: absolute;
-    z-index: 100;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+    &:disabled {
+      background: none;
+    }
   }
 }
 </style>

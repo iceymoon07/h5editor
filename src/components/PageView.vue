@@ -1,5 +1,5 @@
 <template>
-  <div class="page-view" @click.capture="setCurLayer(null)">
+  <div class="page-view" @mousedown.self="setCurLayer(null)">
     <template v-if="curPage && curPage.layerList">
       <template v-for="(layer, index) in curPage.layerList">
         <text-layer

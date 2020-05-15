@@ -1,12 +1,6 @@
 <template>
-  <div class="image-layer">
-    <img
-      class="content"
-      :src="layerData.url"
-      :style="layerStyle"
-      @click.capture="$emit('click-layer')"
-      @mousedown.prevent="$emit('drag-layer',$event)"
-    />
+  <div class="image-layer" :style="layerStyle" @mousedown.prevent="handleMousedown">
+    <img class="content" :src="layerData.url" :style="contentStyle" />
     <widget
       :layer-data="layerData"
       v-if="isSelected"
@@ -33,13 +27,22 @@ export default {
   },
   computed: {
     ...mapState("editor", ["curLayer"]),
-    // 文本图层的样式
+    // 图层的样式
     layerStyle() {
       const { x, y, w, h } = this.layerData;
       return {
         transform: `translate(${x}px,${y}px)`,
         width: w + "px",
-        height: h + "px"
+        height: h + "px",
+        border: this.isSelected ? "1px dashed" : "none"
+      };
+    },
+    contentStyle() {
+      const { w, h } = this.layerData;
+      return {
+        width: w + "px",
+        height: h + "px",
+        cursor: this.isSelected ? "move" : "auto"
       };
     },
     // 判断图层是不是当前选中的图层，是的话就显示边框控件 Widget
@@ -47,7 +50,12 @@ export default {
       return this.layerData === this.curLayer;
     }
   },
-  methods: {}
+  methods: {
+    handleMousedown(e) {
+      this.$emit("click-layer");
+      this.$emit("drag-layer", e);
+    }
+  }
 };
 </script>
 
@@ -56,7 +64,6 @@ export default {
   position: absolute;
   .content {
     position: absolute;
-    z-index: 100;
   }
 }
 </style>
