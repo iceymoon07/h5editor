@@ -1,5 +1,5 @@
 <template>
-  <div class="image-layer" :style="layerStyle" @mousedown.prevent="handleMousedown">
+  <div class="image-layer" :style="layerStyle" @mousedown.prevent.stop="handleMousedown">
     <img class="content" :src="layerData.url" :style="contentStyle" />
     <widget
       :layer-data="layerData"

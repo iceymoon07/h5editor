@@ -19,7 +19,7 @@
 <script>
 import TextLayer from "../layer/TextLayer";
 import ImageLayer from "../layer/ImageLayer";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations } from "vuex";
 
 const LAYER_PANEL_LIST = [
   {
@@ -40,6 +40,9 @@ export default {
     return {
       LAYER_PANEL_LIST
     };
+  },
+  computed: {
+    ...mapState("editor", ["layerList"])
   },
   methods: {
     ...mapMutations("editor", ["addLayer", "setCurLayer"]),

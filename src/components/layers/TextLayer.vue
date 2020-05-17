@@ -3,7 +3,7 @@
     class="text-layer"
     :style="layerStyle"
     @dblclick="inputDisabled=false"
-    @mousedown="handleMousedown"
+    @mousedown.stop="handleMousedown"
   >
     <input
       class="content"
@@ -67,7 +67,9 @@ export default {
   methods: {
     handleMousedown(e) {
       this.$emit("click-layer");
-      this.$emit("drag-layer", e);
+      if (this.inputDisabled) {
+        this.$emit("drag-layer", e);
+      }
     }
   }
 };

@@ -1,8 +1,12 @@
 <template>
   <div class="editor">
     <editor-header></editor-header>
-    <page-view></page-view>
+    <div class="page-view-container" @mousedown="setCurLayer(null)">
+      <page-view></page-view>
+    </div>
     <edit-box></edit-box>
+    <page-list></page-list>
+    <div class="add-page" @click="handleAddPage">+ 添加页面</div>
   </div>
 </template>
 
@@ -10,6 +14,7 @@
 import EditorHeader from "../components/EditorHeader.vue";
 import PageView from "../components/PageView.vue";
 import EditBox from "../components/EditBox.vue";
+import PageList from "../components/PageList.vue";
 import { mapMutations, mapState } from "vuex";
 
 export default {
@@ -17,7 +22,8 @@ export default {
   components: {
     EditorHeader,
     PageView,
-    EditBox
+    EditBox,
+    PageList
   },
   computed: {
     ...mapState("page", ["pageList"])
@@ -28,8 +34,14 @@ export default {
     this.setLayerList(firstPage.layerList);
   },
   methods: {
-    ...mapMutations("editor", ["setLayerList"]),
-    ...mapMutations("page", ["setCurPage"])
+    ...mapMutations("editor", ["setLayerList", "setCurLayer"]),
+    ...mapMutations("page", ["setCurPage", "addPage"]),
+    handleAddPage() {
+      const newPage = { layerList: [], previewUrl: "" };
+      this.addPage(newPage);
+      this.setCurPage(newPage);
+      this.setLayerList(newPage.layerList);
+    }
   }
 };
 </script>
@@ -39,8 +51,26 @@ export default {
   position: relative;
   height: 100vh;
   background-color: #eee;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+  .page-view-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 60px);
+  }
+
+  .add-page {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 200px;
+    height: 40px;
+    background-color: #ff5402;
+    color: #fff;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+  }
 }
 </style>

@@ -22,6 +22,13 @@ const editor = {
       state.layerList.push(layerIns);
     },
     /**
+     * @description 删除某个图层
+     */
+    deleteLayer(state, layerIns) {
+      const index = state.layerList.indexOf(layerIns);
+      state.layerList.splice(index, 1);
+    },
+    /**
      * @description 设置图层列表
      */
     setLayerList(state, layerList) {
@@ -62,6 +69,19 @@ const page = {
     setCurPage(state, page) {
       state.curPage = page;
     },
+    /**
+     * @description 添加新的页面
+     */
+    addPage(state, page) {
+      state.pageList.push(page)
+    },
+    /**
+     * @description 删除某个页面
+     */
+    deletePage(state, page) {
+      const index = state.pageList.indexOf(page);
+      state.pageList.splice(index, 1);
+    }
   },
   actions: {},
   getters: {},

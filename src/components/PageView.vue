@@ -1,30 +1,28 @@
 <template>
-  <div class="page-view" @mousedown.self="setCurLayer(null)">
-    <template v-if="curPage && curPage.layerList">
-      <template v-for="(layer, index) in curPage.layerList">
-        <text-layer
-          v-if="layer.type === 'TEXT'"
-          :layer-data="layer"
-          :key="index"
-          @click-layer="handleClickLayer(layer)"
-          @drag-layer="handleDragLayer(layer,$event)"
-          @drag-tl="handleDragTL(layer,$event)"
-          @drag-tr="handleDragTR(layer,$event)"
-          @drag-bl="handleDragBL(layer,$event)"
-          @drag-br="handleDragBR(layer,$event)"
-        ></text-layer>
-        <image-layer
-          v-if="layer.type === 'IMAGE'"
-          :layer-data="layer"
-          :key="index"
-          @click-layer="handleClickLayer(layer)"
-          @drag-layer="handleDragLayer(layer,$event)"
-          @drag-tl="handleDragTL(layer,$event)"
-          @drag-tr="handleDragTR(layer,$event)"
-          @drag-bl="handleDragBL(layer,$event)"
-          @drag-br="handleDragBR(layer,$event)"
-        ></image-layer>
-      </template>
+  <div class="page-view" v-if="curPage && curPage.layerList">
+    <template v-for="(layer, index) in curPage.layerList">
+      <text-layer
+        v-if="layer.type === 'TEXT'"
+        :layer-data="layer"
+        :key="index"
+        @click-layer="handleClickLayer(layer)"
+        @drag-layer="handleDragLayer(layer,$event)"
+        @drag-tl="handleDragTL(layer,$event)"
+        @drag-tr="handleDragTR(layer,$event)"
+        @drag-bl="handleDragBL(layer,$event)"
+        @drag-br="handleDragBR(layer,$event)"
+      ></text-layer>
+      <image-layer
+        v-if="layer.type === 'IMAGE'"
+        :layer-data="layer"
+        :key="index"
+        @click-layer="handleClickLayer(layer)"
+        @drag-layer="handleDragLayer(layer,$event)"
+        @drag-tl="handleDragTL(layer,$event)"
+        @drag-tr="handleDragTR(layer,$event)"
+        @drag-bl="handleDragBL(layer,$event)"
+        @drag-br="handleDragBR(layer,$event)"
+      ></image-layer>
     </template>
   </div>
 </template>
@@ -48,10 +46,11 @@ export default {
     return {};
   },
   computed: {
+    ...mapState("editor", ["curLayer"]),
     ...mapState("page", ["curPage"])
   },
   methods: {
-    ...mapMutations("editor", ["setCurLayer"]),
+    ...mapMutations("editor", ["setCurLayer", "deleteLayer"]),
     // 点击图层时，把该图层设置为当前选中的图层
     handleClickLayer(layer) {
       this.setCurLayer(layer);
@@ -65,7 +64,20 @@ export default {
     // 拖拽控件左下角方块事件处理
     handleDragBL,
     // 拖拽控件右下角方块事件处理
-    handleDragBR
+    handleDragBR,
+    // 按 delete 键事件处理, 删除当前选中的图层
+    handleDeleteLayer(e) {
+      if (e.keyCode === 46 && this.curLayer) {
+        this.deleteLayer(this.curLayer);
+        this.setCurLayer(null);
+      }
+    }
+  },
+  mounted() {
+    document.addEventListener("keydown", this.handleDeleteLayer);
+  },
+  destroyed() {
+    document.removeEventListener("keydown", this.handleDeleteLayer);
   }
 };
 </script>
