@@ -1,19 +1,19 @@
 <template>
   <div class="page-list">
-    <div
-      class="page-item"
-      :class="{ active:isActive(page) }"
-      v-for="(page, index) in pageList"
-      :key="index"
-      @click="handleClickPage(page)"
-    >
-      <span>第{{index+1}}页</span>
+    <template v-for="(page, index) in pageList">
+      <div
+        class="page-item"
+        :class="{ active:isActive(page) }"
+        :key="index"
+        @click="handleClickPage(page)"
+      >第{{index+1}}页</div>
       <i
         class="iconfont icon-shanchu"
+        :key="'del'+index"
         @click.stop="handleDeletePage(page,index)"
         v-if="pageList.length !== 1"
       ></i>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default {
     ...mapState("page", ["pageList", "curPage"])
   },
   methods: {
-    ...mapMutations("editor", ["setLayerList"]),
+    ...mapMutations("editor", ["setLayerList", "setCurLayer"]),
     ...mapMutations("page", ["setCurPage", "deletePage"]),
     // 判断页面是否是当前选中的页面
     isActive(page) {
@@ -36,6 +36,7 @@ export default {
     handleClickPage(page) {
       this.setCurPage(page);
       this.setLayerList(page.layerList);
+      this.setCurLayer(null);
     },
     // 点击删除页面事件处理
     handleDeletePage(page, index) {
@@ -44,6 +45,7 @@ export default {
       this.setCurPage(jumpPage);
       this.setLayerList(jumpPage.layerList);
       this.deletePage(page);
+      this.setCurLayer(null);
     }
   }
 };
@@ -54,28 +56,38 @@ export default {
   position: absolute;
   left: 0;
   top: 60px;
-  background-color: rgb(11, 32, 46);
   width: 200px;
   height: calc(100vh - 100px);
+  background-color: #fff;
+  border-right: 1px solid #c2c2c2;
   overflow-y: scroll;
 
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #bbb;
+    border-radius: 100px;
+  }
+
   .page-item {
-    position: relative;
+    display: inline-block;
     width: 100px;
     height: 160px;
-    background-color: #fff;
+    background-color: #333;
+    border: 3px solid #fff;
     margin: 20px;
     cursor: pointer;
 
     &.active {
-      opacity: 0.5;
+      border-color: #187cea;
     }
+  }
 
-    i {
-      position: absolute;
-      right: -20px;
-      color: #fff;
-    }
+  i {
+    cursor: pointer;
   }
 }
 </style>

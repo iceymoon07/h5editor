@@ -1,9 +1,10 @@
 <template>
   <div class="edit-box" v-if="curLayer">
+    <div class="label">图层设置</div>
     <div class="position-editor">
-      <span>x坐标</span>
+      <span>X坐标</span>
       <el-input-number v-model="curLayer.x" controls-position="right" size="mini"></el-input-number>
-      <span>y坐标</span>
+      <span>Y坐标</span>
       <el-input-number v-model="curLayer.y" controls-position="right" size="mini"></el-input-number>
     </div>
     <div class="size-editor">
@@ -18,7 +19,7 @@
     </div>
     <div class="color-editor" v-if="curLayer.type === 'TEXT'">
       <span>颜色</span>
-      <el-color-picker v-model="curLayer.color"></el-color-picker>
+      <el-color-picker v-model="curLayer.color" size="mini"></el-color-picker>
     </div>
   </div>
 </template>
@@ -48,9 +49,44 @@ export default {
   position: absolute;
   right: 0;
   top: 60px;
-  background-color: rgb(11, 32, 46);
-  width: 350px;
+  width: 360px;
   height: calc(100vh - 60px);
-  color: #fff;
+  padding: 10px;
+  background-color: #fff;
+  border-left: 1px solid #c2c2c2;
+
+  > div {
+    padding: 5px;
+
+    &.label {
+      padding-top: 0;
+      font-weight: bold;
+      font-size: 20px;
+    }
+
+    &.color-editor {
+      display: flex;
+      align-items: center;
+    }
+
+    > span {
+      display: inline-block;
+      width: 60px;
+      font-size: 14px;
+    }
+
+    /deep/ .el-input-number {
+      width: 80px;
+
+      &:first-of-type {
+        margin-right: 30px;
+      }
+
+      input {
+        padding: 0 15px;
+        text-align: initial;
+      }
+    }
+  }
 }
 </style>

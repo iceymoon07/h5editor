@@ -1,18 +1,18 @@
 <template>
   <header class="editor-header">
-    <span class="logo">h5Editor</span>
-    <span class="panel">
-      <span
+    <div class="logo">h5Editor</div>
+    <div class="panel">
+      <div
         class="panel-option"
         v-for="item in LAYER_PANEL_LIST"
         :key="item.name"
         @click="handleClickPanel(item)"
       >
         <i :class="item.iconClass"></i>
-        <span>{{item.name}}</span>
-      </span>
-    </span>
-    <span class="operation">操作</span>
+        <div>{{item.name}}</div>
+      </div>
+    </div>
+    <div class="operation">操作</div>
   </header>
 </template>
 
@@ -65,21 +65,24 @@ export default {
   height: 60px;
   width: 100vw;
   background-color: #fff;
+  border-bottom: 1px solid #c2c2c2;
   display: flex;
   justify-content: space-between;
   align-items: center;
 
   .logo {
-    padding: 10px;
+    margin-left: 10px;
   }
 
   .panel {
     display: flex;
+    height: 100%;
     .panel-option {
       display: flex;
       flex-direction: column;
+      justify-content: center;
       align-items: center;
-      padding: auto;
+      padding: 10px;
       margin-right: 10px;
       cursor: pointer;
       &:hover {
@@ -87,6 +90,9 @@ export default {
         color: #fff;
       }
     }
+  }
+  .operation {
+    margin-right: 10px;
   }
 }
 </style>

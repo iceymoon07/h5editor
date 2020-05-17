@@ -34,7 +34,7 @@ export default {
         transform: `translate(${x}px,${y}px)`,
         width: w + "px",
         height: h + "px",
-        border: this.isSelected ? "1px dashed" : "none"
+        border: this.isSelected ? "1px dashed" : "1px dashed transparent"
       };
     },
     contentStyle() {
