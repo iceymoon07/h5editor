@@ -31,7 +31,7 @@ export default {
     layerStyle() {
       const { x, y, w, h } = this.layerData;
       return {
-        transform: `translate(${x}px,${y}px)`,
+        transform: `translate(${x-1}px,${y-1}px)`,
         width: w + "px",
         height: h + "px",
         border: this.isSelected ? "1px dashed" : "1px dashed transparent"
@@ -62,6 +62,7 @@ export default {
 <style lang="less" scoped>
 .image-layer {
   position: absolute;
+  box-sizing: content-box;
   .content {
     position: absolute;
   }

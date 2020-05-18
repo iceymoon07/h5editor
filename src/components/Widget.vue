@@ -44,6 +44,7 @@ export default {
 .widget {
   position: absolute;
   .corner {
+    box-sizing: content-box;
     z-index: 20;
     position: absolute;
     width: 6px;

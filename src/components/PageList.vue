@@ -74,6 +74,7 @@ export default {
 
   .page-item {
     display: inline-block;
+    box-sizing: content-box;
     width: 100px;
     height: 160px;
     background-color: #333;
