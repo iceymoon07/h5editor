@@ -12,7 +12,7 @@
         <div>{{item.name}}</div>
       </div>
     </div>
-    <div class="operation">操作</div>
+    <div class="operation" @click="$router.push('/preview')">预览</div>
   </header>
 </template>
 
@@ -93,6 +93,7 @@ export default {
   }
   .operation {
     margin-right: 10px;
+    cursor: pointer;
   }
 }
 </style>

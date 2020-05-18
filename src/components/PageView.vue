@@ -86,7 +86,6 @@ export default {
 .page-view {
   width: 320px;
   height: 514px;
-  margin-top: 60px;
   background-color: #fff;
   position: relative;
 }
