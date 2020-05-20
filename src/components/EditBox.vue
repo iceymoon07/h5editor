@@ -9,13 +9,13 @@
     </div>
     <div class="size-editor">
       <span>宽</span>
-      <el-input-number v-model="curLayer.w" controls-position="right" size="mini"></el-input-number>
+      <el-input-number v-model="curLayer.w" :min="10" controls-position="right" size="mini"></el-input-number>
       <span>高</span>
-      <el-input-number v-model="curLayer.h" controls-position="right" size="mini"></el-input-number>
+      <el-input-number v-model="curLayer.h" :min="10" controls-position="right" size="mini"></el-input-number>
     </div>
     <div class="fontsize-editor" v-if="curLayer.type === 'TEXT'">
       <span>字号</span>
-      <el-input-number v-model="curLayer.fontSize" controls-position="right" size="mini"></el-input-number>
+      <el-input-number v-model="curLayer.fontSize" :min="1" controls-position="right" size="mini"></el-input-number>
     </div>
     <div class="color-editor" v-if="curLayer.type === 'TEXT'">
       <span>颜色</span>

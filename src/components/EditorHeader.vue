@@ -62,6 +62,7 @@ export default {
       this.setCurLayer(layerIns);
     },
     handleOutputPage() {
+      this.setCurLayer(null);
       const pageElement = document.querySelector(".page-view");
       html2canvas(pageElement).then(canvas => {
         const url = canvas.toDataURL();

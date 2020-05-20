@@ -32,12 +32,14 @@ export const handleDragTL = (layer, e) => {
         const deltaX = clientX - x0;
         const deltaY = clientY - y0;
         if (deltaX > 0) {
-            // 更新图层的 x、y 位置数据
-            layer.x = layer.x + Math.abs(deltaX);
-            layer.y = layer.y + Math.abs(deltaY);
-            // 更新图层宽高
-            layer.w = layer.w - Math.abs(deltaX);
-            layer.h = layer.h - Math.abs(deltaY);
+            if (layer.w - Math.abs(deltaX) >= 10 && layer.h - Math.abs(deltaY) >= 10) {
+                // 更新图层的 x、y 位置数据
+                layer.x = layer.x + Math.abs(deltaX);
+                layer.y = layer.y + Math.abs(deltaY);
+                // 更新图层宽高
+                layer.w = layer.w - Math.abs(deltaX);
+                layer.h = layer.h - Math.abs(deltaY);
+            }
         } else {
             // 更新图层的 x、y 位置数据
             layer.x = layer.x - Math.abs(deltaX);
@@ -74,11 +76,13 @@ export const handleDragTR = (layer, e) => {
             layer.w = layer.w + Math.abs(deltaX);
             layer.h = layer.h + Math.abs(deltaY);
         } else {
-            // 更新图层的 x、y 位置数据
-            layer.y = layer.y + Math.abs(deltaY);
-            // 更新图层宽高
-            layer.w = layer.w - Math.abs(deltaX);
-            layer.h = layer.h - Math.abs(deltaY);
+            if (layer.w - Math.abs(deltaX) >= 10 && layer.h - Math.abs(deltaY) >= 10) {
+                // 更新图层的 x、y 位置数据
+                layer.y = layer.y + Math.abs(deltaY);
+                // 更新图层宽高
+                layer.w = layer.w - Math.abs(deltaX);
+                layer.h = layer.h - Math.abs(deltaY);
+            }
         }
         // 更新初始鼠标位置
         x0 = clientX;
@@ -102,11 +106,13 @@ export const handleDragBL = (layer, e) => {
         const deltaX = clientX - x0;
         const deltaY = clientY - y0;
         if (deltaX > 0) {
-            // 更新图层的 x、y 位置数据
-            layer.x = layer.x + Math.abs(deltaX);
-            // 更新图层宽高
-            layer.w = layer.w - Math.abs(deltaX);
-            layer.h = layer.h - Math.abs(deltaY);
+            if (layer.w - Math.abs(deltaX) >= 10 && layer.h - Math.abs(deltaY) >= 10) {
+                // 更新图层的 x、y 位置数据
+                layer.x = layer.x + Math.abs(deltaX);
+                // 更新图层宽高
+                layer.w = layer.w - Math.abs(deltaX);
+                layer.h = layer.h - Math.abs(deltaY);
+            }
         } else {
             // 更新图层的 x、y 位置数据
             layer.x = layer.x - Math.abs(deltaX);
@@ -140,9 +146,11 @@ export const handleDragBR = (layer, e) => {
             layer.w = layer.w + Math.abs(deltaX);
             layer.h = layer.h + Math.abs(deltaY);
         } else {
-            // 更新图层宽高
-            layer.w = layer.w - Math.abs(deltaX);
-            layer.h = layer.h - Math.abs(deltaY);
+            if (layer.w - Math.abs(deltaX) >= 10 && layer.h - Math.abs(deltaY) >= 10) {
+                // 更新图层宽高
+                layer.w = layer.w - Math.abs(deltaX);
+                layer.h = layer.h - Math.abs(deltaY);
+            }
         }
         // 更新初始鼠标位置
         x0 = clientX;
