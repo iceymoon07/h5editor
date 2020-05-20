@@ -7,6 +7,7 @@
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import html2canvas from "html2canvas";
 import PageViewStatic from "../components/PageViewStatic.vue";
 import Pagination from "../components/Pagination.vue";
 

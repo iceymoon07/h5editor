@@ -10,7 +10,7 @@
       <i
         class="iconfont icon-shanchu"
         :key="'del'+index"
-        @click.stop="handleDeletePage(page,index)"
+        @click="handleDeletePage(page,index)"
         v-if="pageList.length !== 1"
       ></i>
     </template>
