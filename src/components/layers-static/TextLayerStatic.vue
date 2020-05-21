@@ -25,5 +25,6 @@ export default {
 <style lang="less" scoped>
 .text-layer-static {
   position: absolute;
+  word-break: break-all;
 }
 </style>

@@ -37,7 +37,7 @@ export default {
     ...mapMutations("editor", ["setLayerList", "setCurLayer"]),
     ...mapMutations("page", ["setCurPage", "addPage"]),
     handleAddPage() {
-      const newPage = { layerList: [], previewUrl: "" };
+      const newPage = { layerList: [] };
       this.addPage(newPage);
       this.setCurPage(newPage);
       this.setLayerList(newPage.layerList);

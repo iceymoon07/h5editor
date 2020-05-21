@@ -12,10 +12,12 @@
         <div>{{item.name}}</div>
       </div>
     </div>
-    <div class="operation" @click="$router.push('/preview')">预览</div>
-    <div class="output" @click="handleOutputPage">
-      <span>导出</span>
-      <i class="iconfont icon-daochu"></i>
+    <div class="operation">
+      <span @click="$router.push('/preview')">预览</span>
+      <span @click="handleOutputPage">
+        <span>导出</span>
+        <i class="iconfont icon-daochu"></i>
+      </span>
     </div>
   </header>
 </template>
@@ -108,8 +110,12 @@ export default {
     }
   }
   .operation {
-    margin-right: 10px;
-    cursor: pointer;
+    padding-right: 10px;
+
+    > span {
+      padding-right: 10px;
+      cursor: pointer;
+    }
   }
 }
 </style>

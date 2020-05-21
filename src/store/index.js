@@ -55,14 +55,18 @@ const page = {
     pageList: [
       { // 页面的图层列表
         layerList: [],
-        // 页面预览图 url
-        previewUrl: '',
       }
     ],
     // 当前选中的页面
     curPage: null,
   },
   mutations: {
+    /**
+     * @description 设置页面列表
+     */
+    setPageList(state, pageList) {
+      state.pageList = pageList;
+    },
     /**
      * @description 设置当前选中的页面
      */

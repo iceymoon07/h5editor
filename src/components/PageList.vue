@@ -1,19 +1,19 @@
 <template>
   <div class="page-list">
-    <template v-for="(page, index) in pageList">
-      <div
-        class="page-item"
-        :class="{ active:isActive(page) }"
-        :key="index"
-        @click="handleClickPage(page)"
-      >第{{index+1}}页</div>
+    <div
+      class="page-item"
+      :class="{ active:isActive(page) }"
+      v-for="(page, index) in pageList"
+      :key="index"
+      @click="handleClickPage(page)"
+    >
+      <span>第{{index+1}}页</span>
       <i
         class="iconfont icon-shanchu"
-        :key="'del'+index"
-        @click="handleDeletePage(page,index)"
+        @click.stop="handleDeletePage(page,index)"
         v-if="pageList.length !== 1"
       ></i>
-    </template>
+    </div>
   </div>
 </template>
 
@@ -73,22 +73,24 @@ export default {
   }
 
   .page-item {
-    display: inline-block;
-    box-sizing: content-box;
-    width: 100px;
-    height: 160px;
-    background-color: #333;
-    border: 3px solid #fff;
-    margin: 20px;
+    position: relative;
+    padding: 10px;
     cursor: pointer;
+
+    &:hover {
+      color: #fff;
+      background-color: #187cea;
+    }
 
     &.active {
-      border-color: #187cea;
+      color: #fff;
+      background-color: #187cea;
     }
-  }
 
-  i {
-    cursor: pointer;
+    i {
+      position: absolute;
+      right: 10px;
+    }
   }
 }
 </style>

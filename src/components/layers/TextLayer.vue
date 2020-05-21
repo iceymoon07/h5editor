@@ -5,7 +5,7 @@
     @dblclick="inputDisabled=false"
     @mousedown.stop="handleMousedown"
   >
-    <input
+    <textarea
       class="content"
       :style="contentStyle"
       type="text"
@@ -43,7 +43,7 @@ export default {
     layerStyle() {
       const { x, y, w, h } = this.layerData;
       return {
-        transform: `translate(${x-1}px,${y-1}px)`,
+        transform: `translate(${x - 1}px,${y - 1}px)`,
         width: w + "px",
         height: h + "px",
         border: this.isSelected ? "1px dashed" : "1px dashed transparent"
@@ -84,6 +84,9 @@ export default {
     position: absolute;
     border: none;
     background: none;
+    resize: none;
+    word-break: break-all;
+    font-family: inherit;
 
     &:focus {
       outline: none;
