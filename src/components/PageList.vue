@@ -78,8 +78,7 @@ export default {
     cursor: pointer;
 
     &:hover {
-      color: #fff;
-      background-color: #187cea;
+      background-color: #eee;
     }
 
     &.active {
