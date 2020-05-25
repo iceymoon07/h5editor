@@ -14,16 +14,11 @@
     </div>
     <div class="operation">
       <span @click="$router.push('/preview')">预览</span>
-      <span @click="handleOutputPage">
-        <span>导出</span>
-        <i class="iconfont icon-daochu"></i>
-      </span>
     </div>
   </header>
 </template>
 
 <script>
-import html2canvas from "html2canvas";
 import { mapState, mapMutations } from "vuex";
 import TextLayer from "../layer/TextLayer";
 import ImageLayer from "../layer/ImageLayer";
@@ -62,17 +57,6 @@ export default {
       this.addLayer(layerIns);
       // 把新的图层实例设置为当前选中的图层
       this.setCurLayer(layerIns);
-    },
-    handleOutputPage() {
-      this.setCurLayer(null);
-      const pageElement = document.querySelector(".page-view");
-      html2canvas(pageElement).then(canvas => {
-        const url = canvas.toDataURL();
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = "导出";
-        a.click();
-      });
     }
   }
 };
