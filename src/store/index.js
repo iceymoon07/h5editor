@@ -51,6 +51,8 @@ const editor = {
 const page = {
   namespaced: true,
   state: {
+    //标题 (默认)
+    title: '我的h5作品',
     // 页面列表，默认有一页
     pageList: [
       { // 页面的图层列表
@@ -61,6 +63,12 @@ const page = {
     curPage: null,
   },
   mutations: {
+    /** 
+     * @description 设置作品标题
+    */
+    setTitle(state, title) {
+      state.title = title
+    },
     /**
      * @description 设置页面列表
      */

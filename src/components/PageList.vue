@@ -65,10 +65,11 @@ export default {
   &::-webkit-scrollbar {
     width: 5px;
     height: 5px;
+    background: #999;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #bbb;
+    background: #ddd;
     border-radius: 100px;
   }
 

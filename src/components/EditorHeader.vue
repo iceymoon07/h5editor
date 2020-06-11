@@ -1,6 +1,9 @@
 <template>
   <header class="editor-header">
-    <div class="logo">h5Editor</div>
+    <button class="back-to-home-button" @click="$router.push('/')">
+      <i class="iconfont icon-zuo"></i>
+      <span>返回首页</span>
+    </button>
     <div class="panel">
       <div
         class="panel-option"
@@ -12,9 +15,10 @@
         <div>{{item.name}}</div>
       </div>
     </div>
-    <div class="operation">
-      <span @click="$router.push('/preview')">预览</span>
-    </div>
+    <button class="goto-preview-button" @click="$router.push(`/preview/${$route.params.id}`)">
+      <i class="iconfont icon-yulan"></i>
+      <span>进入预览</span>
+    </button>
   </header>
 </template>
 
@@ -72,13 +76,27 @@ export default {
   justify-content: space-between;
   align-items: center;
 
-  .logo {
-    margin-left: 10px;
+  > button {
+    height: 100%;
+    padding: 10px;
+    border: none;
+    background: none;
+    cursor: pointer;
+
+    &:hover {
+      color: #fff;
+      background-color: #1593ff;
+    }
+
+    * {
+      font-size: 20px;
+    }
   }
 
   .panel {
     display: flex;
     height: 100%;
+
     .panel-option {
       display: flex;
       flex-direction: column;
@@ -87,18 +105,11 @@ export default {
       padding: 10px;
       margin-right: 10px;
       cursor: pointer;
+
       &:hover {
         background-color: #1593ff;
         color: #fff;
       }
-    }
-  }
-  .operation {
-    padding-right: 10px;
-
-    > span {
-      padding-right: 10px;
-      cursor: pointer;
     }
   }
 }

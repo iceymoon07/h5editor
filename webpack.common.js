@@ -4,26 +4,27 @@ const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-    mode: 'development', // 打包模式
     entry: './src/main.js', // 入口文件
     output: {
         filename: 'main.js', // 输出文件名
         path: path.resolve(__dirname, 'dist'), // 输出文件的根路径
     },
     devtool: 'inline-source-map',
-    devServer: {},
     module: {
         rules: [
             {
                 /*将 js 文件转码成 es5*/
                 test: /\.js?$/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env']
-                    },
-                },
-                exclude: /node_modules/ //去除modules
+                use: [
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            presets: ['@babel/preset-env'],
+                            plugins: ['@babel/plugin-transform-runtime']
+                        }
+                    }
+                ],
+                exclude: /node_modules/ //去除 modules
             },
             {
                 /*解析 vue 文件*/

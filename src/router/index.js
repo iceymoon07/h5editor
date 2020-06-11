@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Editor from '../views/Editor.vue'
 import Preview from '../views/Preview.vue'
+import Work from '../views/Work.vue'
 
 Vue.use(VueRouter);
 
@@ -13,14 +14,19 @@ const routes = [
         component: Home
     },
     {
-        path: '/editor',
+        path: '/editor/:id',
         name: 'Editor',
         component: Editor
     },
     {
-        path: '/preview',
+        path: '/preview/:id',
         name: 'Preview',
         component: Preview
+    },
+    {
+        path: '/work/:id',
+        name: 'Work',
+        component: Work
     }
 ]
 
