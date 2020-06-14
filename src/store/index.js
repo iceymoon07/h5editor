@@ -2,6 +2,26 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 Vue.use(Vuex);
+/**
+ * @description 用户登录状态 store
+ */
+const user = {
+  namespaced: true,
+  state: {
+    // 是否已登录
+    isLogin: false,
+    // 用户名
+    userName: null
+  },
+  mutations: {
+    setIsLogin(state, isLogin) {
+      state.isLogin = isLogin
+    },
+    setUserName(state, userName) {
+      state.userName = userName
+    }
+  }
+}
 
 /**
  * @description 当前编辑器 store
@@ -101,6 +121,7 @@ const page = {
 
 export default new Vuex.Store({
   modules: {
+    user,
     editor,
     page,
   },

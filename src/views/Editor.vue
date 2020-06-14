@@ -12,6 +12,7 @@
         v-if="isWorkTitleInputShow"
         :value="title"
         @blur="handleWorkTitleInput($event)"
+        @keydown.enter="handleWorkTitleInput($event)"
       />
       <page-view></page-view>
     </div>
@@ -43,7 +44,8 @@ export default {
     };
   },
   computed: {
-    ...mapState("page", ["title", "pageList"])
+    ...mapState("page", ["title", "pageList"]),
+    ...mapState("user", ["isLogin"])
   },
   methods: {
     ...mapMutations("editor", ["setLayerList", "setCurLayer"]),

@@ -91,6 +91,7 @@ export default {
   background-color: #eee;
 
   > button {
+    position: absolute;
     padding: 10px;
     background: none;
     border: none;
@@ -107,19 +108,16 @@ export default {
     }
 
     &.back-to-editor-button {
-      position: absolute;
       top: 20px;
       left: 20px;
     }
 
     &.output-img-button {
-      position: absolute;
       top: 20px;
       right: 100px;
     }
 
     &.save-work-button {
-      position: absolute;
       top: 20px;
       right: 20px;
     }
