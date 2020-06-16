@@ -1,18 +1,25 @@
 <template>
-  <div
-    class="text-layer"
-    :style="layerStyle"
-    @dblclick="inputDisabled=false"
-    @mousedown.stop="handleMousedown"
-  >
-    <textarea
-      class="content"
-      :style="contentStyle"
-      type="text"
-      v-model="layerData.text"
-      :disabled="inputDisabled"
-      @blur="inputDisabled=true"
-    />
+  <div class="svg-layer" :style="layerStyle" @mousedown.prevent.stop="handleMousedown">
+    <svg class="content" :style="contentStyle" :width="layerData.w" :height="layerData.h">
+      <rect
+        v-if="layerData.shape===SVG_SHAPES.RECT"
+        width="100%"
+        height="100%"
+        :fill="layerData.bgColor"
+        :stroke="layerData.bdColor"
+        stroke-width="1"
+      />
+      <ellipse
+        v-if="layerData.shape===SVG_SHAPES.ELLIPSE"
+        :cx="layerData.w*0.5"
+        :cy="layerData.h*0.5"
+        :rx="layerData.w*0.5"
+        :ry="layerData.h*0.5"
+        :fill="layerData.bgColor"
+        :stroke="layerData.bdColor"
+        stroke-width="1"
+      />
+    </svg>
     <widget
       :layer-data="layerData"
       v-if="isSelected"
@@ -27,19 +34,21 @@
 <script>
 import Widget from "../Widget.vue";
 import { mapState } from "vuex";
+import { SVG_SHAPES } from "../../layer/SvgLayer";
 
 export default {
-  name: "TextLayer",
   components: { Widget },
   props: {
     layerData: Object
   },
   data() {
-    return { inputDisabled: true };
+    return {
+      SVG_SHAPES
+    };
   },
   computed: {
     ...mapState("editor", ["curLayer"]),
-    // 文本图层的样式
+    // 图层的样式
     layerStyle() {
       const { x, y, w, h } = this.layerData;
       return {
@@ -50,16 +59,8 @@ export default {
       };
     },
     contentStyle() {
-      const { color, fontSize, bold, italic, underline, w, h } = this.layerData;
       return {
-        width: w + "px",
-        height: h + "px",
-        color: color,
-        fontSize: fontSize + "px",
-        fontWeight: bold ? "bold" : "normal",
-        fontStyle: italic ? "italic" : "normal",
-        textDecoration: underline ? "underline" : "none",
-        cursor: this.isSelected && this.inputDisabled ? "move" : "auto"
+        cursor: this.isSelected ? "move" : "auto"
       };
     },
     // 判断图层是不是当前选中的图层，是的话就显示边框控件 Widget
@@ -70,34 +71,18 @@ export default {
   methods: {
     handleMousedown(e) {
       this.$emit("click-layer");
-      if (this.inputDisabled) {
-        this.$emit("drag-layer", e);
-      }
+      this.$emit("drag-layer", e);
     }
   }
 };
 </script>
 
 <style lang="less" scoped>
-.text-layer {
+.svg-layer {
   position: absolute;
   box-sizing: content-box;
-
   .content {
     position: absolute;
-    border: none;
-    background: none;
-    resize: none;
-    word-break: break-all;
-    font-family: inherit;
-
-    &:focus {
-      outline: none;
-    }
-
-    &:disabled {
-      background: none;
-    }
   }
 }
 </style>

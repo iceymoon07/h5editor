@@ -5,15 +5,52 @@
       <span>返回首页</span>
     </button>
     <div class="panel">
-      <div
-        class="panel-option"
-        v-for="item in LAYER_PANEL_LIST"
-        :key="item.name"
-        @click="handleClickPanel(item)"
-      >
-        <i :class="item.iconClass"></i>
-        <div>{{item.name}}</div>
+      <div class="panel-option text" @click="handleClickPanelText">
+        <i class="iconfont icon-wenben"></i>
+        <div>文本</div>
       </div>
+      <div class="panel-option image" v-popover:addImagePopover>
+        <i class="iconfont icon-tupian"></i>
+        <div>图片</div>
+      </div>
+      <el-popover ref="addImagePopover" placement="bottom" title="选择图片" width="500" trigger="hover">
+        <div class="image-selector" :style="imageSelectorStyle">
+          <div
+            class="image-option"
+            :style="imageOptionStyle"
+            @click="handleClickImageOption(image.url)"
+            v-for="image in images"
+            :key="image.name"
+          >
+            <img :src="image.url" width="100" height="100" />
+            <div class="image-name" :style="imageNameStyle">{{image.name}}</div>
+          </div>
+        </div>
+      </el-popover>
+      <div class="panel-option svg" v-popover:addSvgPopover>
+        <i class="iconfont icon-jihe_A"></i>
+        <div>形状</div>
+      </div>
+      <el-popover ref="addSvgPopover" placement="bottom" title="选择形状" width="500" trigger="hover">
+        <div class="svg-selector" :style="imageSelectorStyle">
+          <div
+            class="svg-option"
+            :style="imageOptionStyle"
+            @click="handleClickPanelSvg(SVG_SHAPES.RECT)"
+          >
+            <i class="iconfont icon-fangxing"></i>
+            <div class="svg-name" :style="imageNameStyle">矩形</div>
+          </div>
+          <div
+            class="svg-option"
+            :style="imageOptionStyle"
+            @click="handleClickPanelSvg(SVG_SHAPES.ELLIPSE)"
+          >
+            <i class="iconfont icon-yuan"></i>
+            <div class="svg-name" :style="imageNameStyle">圆</div>
+          </div>
+        </div>
+      </el-popover>
     </div>
     <button class="goto-preview-button" @click="$router.push(`/preview/${$route.params.id}`)">
       <i class="iconfont icon-yulan"></i>
@@ -26,37 +63,51 @@
 import { mapState, mapMutations } from "vuex";
 import TextLayer from "../layer/TextLayer";
 import ImageLayer from "../layer/ImageLayer";
-
-const LAYER_PANEL_LIST = [
-  {
-    name: "文本",
-    iconClass: "iconfont icon-wenben",
-    layerConstructor: TextLayer
-  },
-  {
-    name: "图片",
-    iconClass: "iconfont icon-tupian",
-    layerConstructor: ImageLayer
-  }
-];
+import SvgLayer from "../layer/SvgLayer";
+import { SVG_SHAPES } from "../layer/SvgLayer";
+import images from "../common/images";
 
 export default {
   name: "EditorHeader",
   data() {
     return {
-      LAYER_PANEL_LIST
+      images,
+      SVG_SHAPES,
+      imageSelectorStyle: {
+        display: "flex"
+      },
+      imageOptionStyle: {
+        marginRight: "10px",
+        cursor: "pointer"
+      },
+      imageNameStyle: {
+        textAlign: "center",
+        fontWeight: "bold"
+      }
     };
-  },
-  computed: {
-    ...mapState("editor", ["layerList"])
   },
   methods: {
     ...mapMutations("editor", ["addLayer", "setCurLayer"]),
-    // 点击面板按钮的事件处理
-    handleClickPanel(panel) {
-      const { layerConstructor } = panel;
+    // 点击面板文字按钮的事件处理
+    handleClickPanelText() {
       // 使用相应的构造器创建新的图层实例
-      const layerIns = new layerConstructor();
+      const layerIns = new TextLayer();
+      // 把新的图层实例添加进图层列表
+      this.addLayer(layerIns);
+      // 把新的图层实例设置为当前选中的图层
+      this.setCurLayer(layerIns);
+    },
+    handleClickImageOption(url) {
+      // 使用相应的构造器创建新的图层实例
+      const layerIns = new ImageLayer(url);
+      // 把新的图层实例添加进图层列表
+      this.addLayer(layerIns);
+      // 把新的图层实例设置为当前选中的图层
+      this.setCurLayer(layerIns);
+    },
+    handleClickPanelSvg(shape) {
+      // 使用相应的构造器创建新的图层实例
+      const layerIns = new SvgLayer(shape);
       // 把新的图层实例添加进图层列表
       this.addLayer(layerIns);
       // 把新的图层实例设置为当前选中的图层

@@ -29,6 +29,7 @@ import EditBox from "../components/EditBox.vue";
 import PageList from "../components/PageList.vue";
 import { mapMutations, mapState } from "vuex";
 import { getWorkById } from "../api/works.js";
+import FLAGS from "../common/flags";
 
 export default {
   name: "Editor",
@@ -68,7 +69,7 @@ export default {
   },
   async mounted() {
     const id = this.$route.params.id;
-    if (id !== "newwork") {
+    if (id !== "newwork" && !FLAGS.PREVIEW_TO_EDITOR_FLAG) {
       const workData = await getWorkById(id);
       this.setPageList(workData.pageList);
       this.setTitle(workData.title);
@@ -76,6 +77,34 @@ export default {
     const [firstPage] = this.pageList;
     this.setCurPage(firstPage);
     this.setLayerList(firstPage.layerList);
+  },
+  destroyed() {
+    FLAGS.PREVIEW_TO_EDITOR_FLAG = false;
+  },
+  beforeRouteEnter: (to, from, next) => {
+    if (from.name === "Preview") {
+      FLAGS.PREVIEW_TO_EDITOR_FLAG = true;
+      next();
+    } else {
+      next();
+    }
+  },
+  beforeRouteLeave(to, from, next) {
+    if (to.name === "Preview") {
+      next();
+    } else {
+      this.$confirm("您还没有提交编辑结果，真的要离开当前页面吗？", "提示", {
+        distinguishCancelAndClose: true,
+        confirmButtonText: "继续编辑",
+        cancelButtonText: "离开"
+      })
+        .then(() => {
+          next(false);
+        })
+        .catch(action => {
+          action === "cancel" ? next() : next(false);
+        });
+    }
   }
 };
 </script>

@@ -29,7 +29,7 @@ export default {
   components: { PageViewStatic, Pagination },
   data() {
     return {
-      firstPageThumb: ""
+      firstPageThumb: "",
     };
   },
   computed: {
@@ -47,24 +47,31 @@ export default {
         a.click();
       });
     },
-    async handleSaveWork() {
-      const id = this.$route.params.id;
-      if (id === "newwork") {
-        const res = await createWork({
-          title: this.title,
-          pageList: this.pageList,
-          firstPageThumb: this.firstPageThumb
-        });
-        this.$message.success(res.message);
-      } else {
-        const res = await updateWork(id, {
-          title: this.title,
-          pageList: this.pageList,
-          firstPageThumb: this.firstPageThumb
-        });
-        this.$message.success(res.message);
-      }
-      this.$router.push("/");
+    handleSaveWork() {
+      this.$confirm("是否确认提交编辑结果？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消"
+      })
+        .then(async () => {
+          const id = this.$route.params.id;
+          if (id === "newwork") {
+            const res = await createWork({
+              title: this.title,
+              pageList: this.pageList,
+              firstPageThumb: this.firstPageThumb
+            });
+            this.$message.success(res.message);
+          } else {
+            const res = await updateWork(id, {
+              title: this.title,
+              pageList: this.pageList,
+              firstPageThumb: this.firstPageThumb
+            });
+            this.$message.success(res.message);
+          }
+          this.$router.push("/");
+        })
+        .catch(() => this.$message.info("已取消提交"));
     }
   },
   created() {

@@ -2,7 +2,7 @@
   <div class="page-view" v-if="curPage && curPage.layerList">
     <template v-for="(layer, index) in curPage.layerList">
       <text-layer
-        v-if="layer.type === 'TEXT'"
+        v-if="layer.type === LAYER_TYPES.TEXT"
         :layer-data="layer"
         :key="index"
         @click-layer="handleClickLayer(layer)"
@@ -13,7 +13,7 @@
         @drag-br="handleDragBR(layer,$event)"
       ></text-layer>
       <image-layer
-        v-if="layer.type === 'IMAGE'"
+        v-if="layer.type === LAYER_TYPES.IMAGE"
         :layer-data="layer"
         :key="index"
         @click-layer="handleClickLayer(layer)"
@@ -23,14 +23,27 @@
         @drag-bl="handleDragBL(layer,$event)"
         @drag-br="handleDragBR(layer,$event)"
       ></image-layer>
+      <svg-layer
+        v-if="layer.type === LAYER_TYPES.SVG"
+        :layer-data="layer"
+        :key="index"
+        @click-layer="handleClickLayer(layer)"
+        @drag-layer="handleDragLayer(layer,$event)"
+        @drag-tl="handleDragTL(layer,$event)"
+        @drag-tr="handleDragTR(layer,$event)"
+        @drag-bl="handleDragBL(layer,$event)"
+        @drag-br="handleDragBR(layer,$event)"
+      ></svg-layer>
     </template>
   </div>
 </template>
 
 <script>
 import { mapState, mapMutations } from "vuex";
+import { LAYER_TYPES } from "../layer/common";
 import TextLayer from "./layers/TextLayer.vue";
 import ImageLayer from "./layers/ImageLayer.vue";
+import SvgLayer from "./layers/SvgLayer.vue";
 import {
   handleDragLayer,
   handleDragTL,
@@ -41,9 +54,9 @@ import {
 
 export default {
   name: "PageView",
-  components: { TextLayer, ImageLayer },
+  components: { TextLayer, ImageLayer, SvgLayer },
   data() {
-    return {};
+    return { LAYER_TYPES };
   },
   computed: {
     ...mapState("editor", ["curLayer"]),
