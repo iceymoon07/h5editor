@@ -3,6 +3,7 @@ const commonConfig = require('./webpack.common.js');
 
 const devConfig = {
     mode: 'development', // 打包模式
+    devtool: 'inline-source-map',
     devServer: {
         proxy: {
             "/api": {

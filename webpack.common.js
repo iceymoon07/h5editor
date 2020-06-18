@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackplugin = require('html-webpack-plugin');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     entry: './src/main.js', // 入口文件
@@ -9,7 +10,6 @@ module.exports = {
         filename: 'main.js', // 输出文件名
         path: path.resolve(__dirname, 'dist'), // 输出文件的根路径
     },
-    devtool: 'inline-source-map',
     module: {
         rules: [
             {
@@ -82,6 +82,20 @@ module.exports = {
             template: path.resolve(__dirname, 'index.html') // 导入被打包的 html 文件模板
         }),
         new VueLoaderPlugin(),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
+        new BundleAnalyzerPlugin(
+            {
+                analyzerMode: 'static',
+                analyzerHost: '127.0.0.1',
+                analyzerPort: 8888,
+                reportFilename: 'report.html',
+                defaultSizes: 'parsed',
+                openAnalyzer: true,
+                generateStatsFile: false,
+                statsFilename: 'stats.json',
+                statsOptions: null,
+                logLevel: 'info'
+            }
+        ),
     ]
 }
